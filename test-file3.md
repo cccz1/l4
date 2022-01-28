@@ -1,5 +1,1 @@
-[stuff]
-
-paragraph
-
-(page.com)
+[another link!][some-page.html]
