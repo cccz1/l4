@@ -12,9 +12,9 @@ public class MarkdownParse {
         int currentIndex = 0;
         //System.out.println(markdown.length());
         while(currentIndex < markdown.length()) {
-            System.out.println(currentIndex);
+            //System.out.println(currentIndex);
 
-            if(!markdown.substring(currentIndex).contains("[")){
+            if(!markdown.substring(currentIndex).contains("[") && markdown.substring(currentIndex).contains("(")){
                 int nextOpenBracket = markdown.indexOf("(", currentIndex);
                 int nextCloseBracket = markdown.indexOf(")", nextOpenBracket);
                 int openParen = markdown.indexOf("(", nextCloseBracket);
@@ -22,25 +22,33 @@ public class MarkdownParse {
                 toReturn.add(markdown.substring(openParen + 1, closeParen));
                 currentIndex = closeParen + 1;
             }
-            if(!markdown.substring(currentIndex).contains("(")){
+
+            else if(!markdown.substring(currentIndex).contains("(") && markdown.substring(currentIndex).contains("[") 
+            && markdown.substring(currentIndex).contains("]")){
                 int nextOpenBracket = markdown.indexOf("[", currentIndex);
+                //System.out.println(nextOpenBracket);
                 int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
                 int openParen = markdown.indexOf("[", nextCloseBracket);
+                if(openParen == -1){break;}
                 int closeParen = markdown.indexOf("]", openParen);
                 toReturn.add(markdown.substring(openParen + 1, closeParen));
+                //System.out.println(toReturn);
                 currentIndex = closeParen + 1;
             }
-            if(markdown.substring(currentIndex).contains("[")){
+            else if(markdown.substring(currentIndex).contains("[") && markdown.substring(currentIndex).contains("(")){
                 int nextOpenBracket = markdown.indexOf("[", currentIndex);
                 int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
                 int openParen = markdown.indexOf("(", nextCloseBracket);
                 int closeParen = markdown.indexOf(")", openParen);
                 toReturn.add(markdown.substring(openParen + 1, closeParen));
                 currentIndex = closeParen + 1;
-        }
+            }
+            else{break;}
             
         }
+        //System.out.println(toReturn);
         return toReturn;
+        
     }
     public static void main(String[] args) throws IOException {
 		Path fileName = Path.of(args[0]);

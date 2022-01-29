@@ -4,6 +4,7 @@ import org.junit.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MarkdownParseTest {
@@ -15,14 +16,57 @@ public class MarkdownParseTest {
     @Test
     public void testFile1() throws IOException {
         String contents= Files.readString(Path.of("test-file.md"));
-        List<String> shouldBe = List.of("https://s2omething.com", "some-page.html");
+        List<String> shouldBe = List.of("https://something.com", "some-page.html");
         assertEquals(MarkdownParse.getLinks(contents), shouldBe);
     }
     
     @Test
     public void testFile2() throws IOException {
-        String contents2 = Files.readString(Path.of("test-file3.md"));
-        List<String> shouldBe2 = List.of("page.com");
+        String contents2 = Files.readString(Path.of("test-file2.md"));
+        List<String> shouldBe2 = List.of("https://something.com", "some-page.html");
         assertEquals(MarkdownParse.getLinks(contents2), shouldBe2);
     }
+
+    @Test
+    public void testFile3() throws IOException {
+        String contents3 = Files.readString(Path.of("test-file3.md"));
+        List<String> shouldBe3 = List.of("https://cocacola.com");
+        assertEquals(MarkdownParse.getLinks(contents3), shouldBe3);
+    }
+
+    @Test
+    public void testFile4() throws IOException {
+        String contents4 = Files.readString(Path.of("test-file4.md"));
+        List<String> shouldBe4 = new ArrayList<>();
+        assertEquals(MarkdownParse.getLinks(contents4), shouldBe4);
+    }
+
+    @Test
+    public void testFile5() throws IOException {
+        String contents5 = Files.readString(Path.of("test-file5.md"));
+        List<String> shouldBe5 = List.of("page.com");
+        assertEquals(MarkdownParse.getLinks(contents5), shouldBe5);
+    }
+
+    @Test
+    public void testFile6() throws IOException {
+        String contents6 = Files.readString(Path.of("test-file6.md"));
+        List<String> shouldBe6 = List.of("page.com");
+        assertEquals(MarkdownParse.getLinks(contents6), shouldBe6);
+    }
+
+    @Test
+    public void testFile7() throws IOException {
+        String contents7 = Files.readString(Path.of("test-file7.md"));
+        List<String> shouldBe7 = new ArrayList<>();
+        assertEquals(MarkdownParse.getLinks(contents7), shouldBe7);
+    }
+
+    @Test
+    public void testFile8() throws IOException {
+        String contents8 = Files.readString(Path.of("test-file8.md"));
+        List<String> shouldBe8 = List.of("a link on the first line");
+        assertEquals(MarkdownParse.getLinks(contents8), shouldBe8);
+    }
+
 }
